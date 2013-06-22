@@ -10,6 +10,8 @@
 (defroutes app-routes
   (GET "/" [:as {uri :uri host :server-name port :server-port}]
        (->> maze/default maze/ways (map (partial to-url host port))))
+  (GET (str "/" maze/goal) [_]
+       "Finished!")
   (GET "/:id" [id :as {uri :uri host :server-name port :server-port}]
        (if-let [node (-> maze/default (maze/lookup id))]
          (->> node maze/ways (map (partial to-url host port)))

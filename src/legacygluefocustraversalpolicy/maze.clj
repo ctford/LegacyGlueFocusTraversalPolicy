@@ -13,6 +13,8 @@
              [{:value 2 :children []}
               {:value 3 :children []}]}))
 
+(def goal 3)
+
 (defn with-parent [node nodes]
   (if-let [parent (zip/up node)]
     (conj nodes (zip/node parent))

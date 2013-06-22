@@ -17,3 +17,7 @@
 (fact "Missing route 404s."
   (app (request :get "/invalid/what")) => (contains {:status 404})
   (app (request :get "/42")) => (contains {:status 404}))
+
+(fact "Victory is shown."
+  (app (request :get "/3")) => (contains {:status 200})
+  (app (request :get "/3")) => (contains {:body "Finished!"}))
