@@ -1,7 +1,8 @@
 (ns legacygluefocustraversalpolicy.handler
   (:use compojure.core)
   (:require [compojure.handler :as handler]
-            [compojure.route :as route]))
+            [compojure.route :as route]
+            [legacygluefocustraversalpolicy.maze :as maze]))
 
 (defroutes app-routes
   (GET "/" [] "Enter...")
