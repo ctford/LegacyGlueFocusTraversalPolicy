@@ -1,19 +1,29 @@
 (ns legacygluefocustraversalpolicy.maze
   (:require [clojure.zip :as zip]))
 
-(def random
+(def psuedo-random
   (let [generator (java.util.Random. 42)]
-    (fn [] (-> generator (.nextInt Integer/MAX_VALUE)))))
+    (fn [limit] (-> generator (.nextInt limit)))))
 
 (def maze-zip
   (partial zip/zipper (constantly true) :children #(assoc %1 :children %2))) 
 
-(def default 
-  (maze-zip {:value 1 :children
-             [{:value 2 :children []}
-              {:value 3 :children []}]}))
+(def ids
+  (repeatedly 10 (fn [] (psuedo-random Integer/MAX_VALUE))))
 
-(def goal 3)
+(defn generate [random [n & others]]
+  (cond others 
+    (let [remaining (count others)
+          left (random remaining)]
+      {:value n :children
+       (->> [(generate random (take left others))
+             (generate random (drop left others))]
+            (filter (comp not nil?)))})
+    n {:value n :children []}
+    :otherwise nil))
+
+(def default (maze-zip (generate psuedo-random ids)))
+(def goal (last ids))
 
 (defn with-parent [node nodes]
   (if-let [parent (zip/up node)]

@@ -10,14 +10,14 @@
 (defroutes app-routes
   (GET "/" [:as {uri :uri host :server-name port :server-port}]
        (->> maze/default maze/ways (map (partial to-url host port))))
-  (GET (str "/" maze/goal) [_]
-       "Finished!")
+  (GET (str "/" maze/goal) [_] "Finished!")
+  (GET "/solution" [:as {uri :uri host :server-name port :server-port}] 
+       (to-url host port maze/goal))
   (GET "/:id" [id :as {uri :uri host :server-name port :server-port}]
        (if-let [node (-> maze/default (maze/lookup id))]
          (->> node maze/ways (map (partial to-url host port)))
          (route/not-found "Not Found")))
-  (route/not-found
-    "Not Found"))
+  (route/not-found "Not Found"))
 
 (def app
   (-> app-routes handler/site json/wrap-json-response))
