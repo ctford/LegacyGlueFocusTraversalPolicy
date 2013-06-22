@@ -13,5 +13,6 @@
   (-> example zip/down ways) => [1])
 
 (fact "lookup finds nodes based on their value"
-  (-> example (lookup 2) ways) => [1]
-  (-> example (lookup 1) ways) => [2 3])
+  (-> example (lookup "2") ways) => [1]
+  (-> example (lookup "1") ways) => [2 3]
+  (-> example (lookup "42")) => nil)
