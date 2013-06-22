@@ -8,5 +8,10 @@
 (def maze-zip
   (partial zip/zipper (constantly true) :children #(assoc %1 :children %2))) 
 
+(defn with-parent [node nodes]
+  (if-let [parent (zip/up node)]
+    (conj nodes (zip/node parent))
+    nodes))
+
 (defn ways [submaze]
-  (->> submaze zip/children (map :value)))
+  (->> submaze zip/children (with-parent submaze) (map :value)))
