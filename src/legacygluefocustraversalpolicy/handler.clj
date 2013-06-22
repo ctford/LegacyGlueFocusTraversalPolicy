@@ -3,7 +3,8 @@
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [legacygluefocustraversalpolicy.maze :as maze]
-            [ring.middleware.json :as json]))
+            [ring.middleware.json :as json]
+            [ring.adapter.jetty :as jetty]))
 
 (defn to-url [host port n] (str "http://" host ":" port "/" n))
 
@@ -20,5 +21,7 @@
          (route/not-found "Not Found")))
   (route/not-found "Not Found"))
 
-(def app
-  (-> app-routes handler/site json/wrap-json-response))
+(def app (-> app-routes handler/site json/wrap-json-response))
+
+(defn -main [port]
+  (jetty/run-jetty app {:port (Integer. port)}))
