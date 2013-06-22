@@ -12,7 +12,8 @@
        (->> maze/default maze/ways (map (partial to-url host port))))
   (GET (str "/" maze/goal) [_] "Finished!")
   (GET "/solution" [:as {uri :uri host :server-name port :server-port}] 
-       (to-url host port maze/goal))
+       (let [ancestry (-> maze/default (maze/lookup (str maze/goal)) maze/ancestry)]
+         (map (partial to-url host port) (reverse ancestry))))
   (GET "/:id" [id :as {uri :uri host :server-name port :server-port}]
        (if-let [node (-> maze/default (maze/lookup id))]
          (->> node maze/ways (map (partial to-url host port)))
