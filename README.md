@@ -14,6 +14,14 @@ To start a web server for the application, run:
 
     lein ring server
 
+## Tests
+
+    lein midje
+
+## Source
+
+[@cassieldotcom](https://twitter.com/cassieldotcom/status/348177732817018880)
+
 ## License
 
 Copyright © 2013 @ctford 
