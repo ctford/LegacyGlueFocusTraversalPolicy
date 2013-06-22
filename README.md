@@ -1,5 +1,7 @@
 # LegacyGlueFocusTraversalPolicy 
 
+[![Build Status](https://travis-ci.org/ctford/LegacyGlueFocusTraversalPolicy.png)](https://travis-ci.org/ctford/LegacyGlueFocusTraversalPolicy)
+
 A RESTful maze.
 
 ## Prerequisites
