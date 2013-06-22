@@ -5,15 +5,17 @@
             [legacygluefocustraversalpolicy.maze :as maze]
             [ring.middleware.json :as json]))
 
+(defn to-url [n] (str "http://localhost/" n))
+
 (defroutes app-routes
   (GET "/" []
-       (-> maze/default maze/ways))
+       (->> maze/default maze/ways (map to-url)))
   (GET "/:id" [id]
-       (if-let [node (-> maze/default (maze/lookup ,id))]
-         (maze/ways node)
+       (if-let [node (-> maze/default (maze/lookup id))]
+         (->> node maze/ways (map to-url))
          (route/not-found "Not Found")))
   (route/not-found
     "Not Found"))
 
 (def app
-  (json/wrap-json-response (handler/site app-routes)))
+  (-> app-routes handler/site json/wrap-json-response))
