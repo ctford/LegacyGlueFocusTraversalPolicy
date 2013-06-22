@@ -15,3 +15,8 @@
 
 (defn ways [submaze]
   (->> submaze zip/children (with-parent submaze) (map :value)))
+
+(defn lookup [submaze value]
+  (if (= value (-> submaze zip/node :value))
+    submaze
+    (-> submaze zip/next (lookup value))))
