@@ -25,4 +25,5 @@
 
 (fact "Solution is available."
   (app (request :get "/solution")) => (contains {:status 200})
-  (:body (app (request :get "/solution" ))) => (contains (str "http://localhost:80/" maze/goal)))
+  (:body (app (request :get "/solution" )))
+      => (contains (str "http://localhost:80/" maze/goal)))
