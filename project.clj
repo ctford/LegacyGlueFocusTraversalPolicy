@@ -1,6 +1,7 @@
 (defproject legacygluefocustraversalpolicy "0.1.0-SNAPSHOT"
   :description "FIXME: A RESTful maze."
   :url "https://github.com/ctford/LegacyGlueFocusTraversalPolicy"
+  :main legacygluefocustraversalpolicy.handler 
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [compojure "1.1.5"]
                  [ring/ring-json "0.2.0"]
